@@ -1,25 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react"
+import "./App.css"
+import {Task} from "./Task.js"
 
-function App() {
+export default function App(){
+
+  const [newTask, setNewTask] = useState("");
+  const [tasks, setTasks] = useState([]);
+
+  function addTask(e){
+    e.preventDefault()
+
+    setTasks(currentTasks => {
+      return [...currentTasks, {text: newTask}]
+    })
+
+    setNewTask("");
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <>
 
-export default App;
+    {/* TOP CENTER CONTAINER */}
+    <div className="topContainer">
+      <h1 className="title">News</h1>
+      
+      <form className="form">
+        <input type="text" value={newTask} onChange={e => setNewTask(e.target.value)}></input>
+        <button className="btn" onClick={addTask}>Add</button>
+      </form>
+    </div>
+      
+    {/* LIST LEFT */}
+    <div className="listdiv">
+      <ul className="list">
+        {tasks.map(task => {
+          return <Task text={task.text}></Task>
+        })}
+      </ul>
+    </div>
+
+    {/* LIST RIGHT */}
+    <div className="listdiv">
+      <ul className="list">
+        {tasks.map(task => {
+          return <Task text={task.text}></Task>
+        })}
+      </ul>
+    </div>
+
+    </>
+  )
+}
